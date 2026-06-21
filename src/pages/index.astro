@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import PostList from '../components/PostList.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 5);
+---
+
+<BaseLayout>
+  <Nav />
+  <main class="pb-20">
+    <section class="pt-4 pb-14">
+      <h1 class="text-[20px] font-medium tracking-tight mb-1">gabriel gabateli alves</h1>
+      <p class="font-mono text-[12px] text-[#888] dark:text-[#555] mb-6">são paulo, brazil</p>
+      <p class="text-[15px] text-[#555] dark:text-[#aaa] leading-relaxed max-w-[420px]">
+        computer engineering student <span class="text-[#111] dark:text-[#ededed]">@ fiap</span>.<br>
+      </p>
+      <div class="flex items-center gap-4 mt-6">
+        <a href="https://github.com/gabrielgabateli" target="_blank" rel="noopener"
+           class="font-mono text-[12px] text-[#888] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">
+          github ↗
+        </a>
+        <a href="https://linkedin.com/in/gabateli" target="_blank" rel="noopener"
+           class="font-mono text-[12px] text-[#888] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">
+          linkedin ↗
+        </a>
+        <a href="mailto:gabateli16@gmail.com"
+           class="font-mono text-[12px] text-[#888] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">
+          email ↗
+        </a>
+      </div>
+    </section>
+
+    <section id="projects" class="mb-14">
+      <h2 class="text-[13px] font-medium tracking-tight mb-4">projects</h2>
+<!--      <ul class="divide-y divide-[#ebebeb] dark:divide-[#1e1e1e]">
+        <li class="flex items-start justify-between py-3">
+
+          <div>
+             <p class="font-mono text-[13px] text-[#222] dark:text-[#ccc]">Template</p> 
+             <p class="font-mono text-[11px] text-[#aaa] dark:text-[#555] mt-0.5">Ainda vou preencher</p> 
+          </div>
+          <a href="https://google.com" target="_blank" rel="noopener" class="font-mono text-[11px] text-[#aaa] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">↗</a>
+          
+        </li>
+      </ul> -->
+      <!-- <ul class="divide-y divide-[#ebebeb] dark:divide-[#1e1e1e]">
+        <li class="flex items-start justify-between py-3">
+          <div>
+            <p class="font-mono text-[13px] text-[#222] dark:text-[#ccc]">psg-cogimpair</p>
+            <p class="font-mono text-[11px] text-[#aaa] dark:text-[#555] mt-0.5">RandomForest · PSG · CAISR</p>
+          </div>
+          <a href="https://github.com/gabriegabateli" target="_blank" rel="noopener"
+             class="font-mono text-[11px] text-[#aaa] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">↗</a>
+        </li>
+        <li class="flex items-start justify-between py-3">
+          <div>
+            <p class="font-mono text-[13px] text-[#222] dark:text-[#ccc]">homelab</p>
+            <p class="font-mono text-[11px] text-[#aaa] dark:text-[#555] mt-0.5">Proxmox · LXC · Cloudflare Tunnel</p>
+          </div>
+          <a href="/blog"
+             class="font-mono text-[11px] text-[#aaa] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">↗</a>
+        </li>
+      </ul> -->
+    </section>
+
+    <section>
+      
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-[13px] font-medium tracking-tight">writing</h2>
+      <!--   <a href="/blog" class="font-mono text-[11px] text-[#aaa] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">
+          ver todos →
+        </a>
+      </div>
+      <PostList posts={posts} />  --> 
+    </section>
+
+    <footer class="mt-16 pt-6 border-t border-[#ebebeb] dark:border-[#1e1e1e]">
+      <p class="font-mono text-[11px] text-[#ccc] dark:text-[#333]">gabriel gabateli · são paulo · 2026</p>
+    </footer>
+  </main>
+</BaseLayout>

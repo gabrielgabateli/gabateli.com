@@ -1,0 +1,42 @@
+---
+interface Props { tags: string[] }
+const { tags } = Astro.props;
+---
+
+<style>
+  .tag-btn {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 0.5px solid #e0e0e0;
+    background: transparent;
+    color: #777;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  :global(.dark) .tag-btn { border-color: #333; color: #666; }
+  .tag-btn.active { background: #111; color: #fff; border-color: #111; }
+  :global(.dark) .tag-btn.active { background: #ededed; color: #0a0a0a; border-color: #ededed; }
+</style>
+
+<div class="flex gap-1.5 flex-wrap" id="tag-filter">
+  <button class="tag-btn active" data-tag="all">all</button>
+  {tags.map((tag) => <button class="tag-btn" data-tag={tag}>{tag}</button>)}
+</div>
+
+<script>
+  const btns = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
+  const rows = document.querySelectorAll<HTMLElement>('[data-post-tag]');
+
+  btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const tag = btn.dataset.tag!;
+      btns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      rows.forEach((row) => {
+        row.style.display = (tag === 'all' || row.dataset.postTag === tag) ? '' : 'none';
+      });
+    });
+  });
+</script>

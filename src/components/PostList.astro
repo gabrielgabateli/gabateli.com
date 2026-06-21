@@ -1,0 +1,28 @@
+---
+interface Post {
+  slug: string;
+  data: { title: string; date: string; tag: string };
+}
+interface Props { posts: Post[] }
+const { posts } = Astro.props;
+---
+
+<ul class="divide-y divide-[#ebebeb] dark:divide-[#1e1e1e]">
+  {posts.map((post) => (
+    <li>
+      <a href={`/blog/${post.slug}`} class="flex items-baseline justify-between py-1.5 group">
+        <div class="flex items-baseline gap-2.5 min-w-0 overflow-hidden">
+          <span class="font-mono text-[13px] text-[#222] dark:text-[#ccc] truncate group-hover:underline underline-offset-2 decoration-[#ccc] dark:decoration-[#444]">
+            {post.data.title}
+          </span>
+          <span class="font-mono text-[10px] text-[#bbb] dark:text-[#444] shrink-0">
+            {post.data.tag}
+          </span>
+        </div>
+        <span class="font-mono text-[11px] text-[#aaa] dark:text-[#555] shrink-0 ml-4">
+          {post.data.date}
+        </span>
+      </a>
+    </li>
+  ))}
+</ul>

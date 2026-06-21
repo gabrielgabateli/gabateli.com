@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { -webkit-font-smoothing: antialiased; }
+
+  ::selection { background: #111; color: #fff; }
+  .dark ::selection { background: #ededed; color: #0a0a0a; }
+}
+
+@layer components {
+  .prose-custom p {
+    @apply text-[15px] leading-[1.8] mb-5 text-[#444] dark:text-[#aaa];
+  }
+  .prose-custom h2 {
+    @apply text-[17px] font-medium tracking-tight mt-10 mb-3 text-[#111] dark:text-[#ededed];
+  }
+  .prose-custom h3 {
+    @apply text-[15px] font-medium mt-6 mb-2 text-[#111] dark:text-[#ededed];
+  }
+  .prose-custom ul {
+    @apply pl-5 mb-5;
+  }
+  .prose-custom li {
+    @apply text-[15px] leading-[1.8] text-[#444] dark:text-[#aaa];
+  }
+  .prose-custom a {
+    @apply underline underline-offset-2 text-[#111] dark:text-[#ededed]
+           decoration-[#ccc] dark:decoration-[#444]
+           hover:decoration-[#111] dark:hover:decoration-[#ededed] transition-colors;
+  }
+  .prose-custom code:not(pre code) {
+    @apply font-mono text-[12px] bg-[#f2f2f2] dark:bg-[#1a1a1a]
+           text-[#333] dark:text-[#ccc] px-1.5 py-0.5 rounded;
+  }
+  .prose-custom pre {
+    @apply font-mono text-[12px] bg-[#f6f6f6] dark:bg-[#111]
+           text-[#333] dark:text-[#ccc] p-4 rounded-lg overflow-x-auto mb-5
+           border border-[#e8e8e8] dark:border-[#1e1e1e] leading-relaxed;
+  }
+  .prose-custom blockquote {
+    @apply border-l-2 border-[#ddd] dark:border-[#333]
+           pl-4 italic text-[14px] text-[#888] dark:text-[#666] mb-5;
+  }
+}
