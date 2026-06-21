@@ -3,6 +3,7 @@ title: "proxmox: minha setup atual"
 description: "Como eu configurei meu homelab com ThinkCentre M720q rodando Proxmox, LXC containers e gerenciamento de VMs."
 date: "2024-12"
 tag: "homelab"
+draft: true
 ---
 
 <!-- Meu homelab roda em um ThinkCentre M720q — compacto, silencioso e econômico. Perfeito pra ficar ligado 24/7.

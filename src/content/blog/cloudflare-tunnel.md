@@ -3,6 +3,7 @@ title: "configurando cloudflare tunnel no homelab"
 description: "Como expor serviços do homelab sem abrir portas no roteador, usando Cloudflare Tunnel gratuitamente."
 date: "2025-01"
 tag: "homelab"
+draft: true
 ---
 
 <!-- Queria acessar meus serviços de fora de casa sem mexer no roteador. A solução foi o `cloudflared`.
