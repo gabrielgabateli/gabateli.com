@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+---
+
+<BaseLayout title="404">
+  <Nav />
+  <main class="flex flex-col items-center justify-center pt-20 pb-32 text-center">
+    <p class="font-mono text-[10px] text-[#ccc] dark:text-[#333] mb-6 tracking-widest uppercase">error</p>
+    <h1 class="text-[72px] font-medium tracking-tighter text-[#111] dark:text-[#ededed] leading-none mb-4">404</h1>
+    <p class="text-[15px] text-[#888] dark:text-[#666] mb-10">página não encontrada.</p>
+    <a href="/" class="font-mono text-[12px] text-[#888] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">
+      voltar ao início →
+    </a>
+  </main>
+</BaseLayout>
