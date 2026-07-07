@@ -14,21 +14,24 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   <main class="pb-20">
     <section class="pt-4 pb-14">
       <h1 class="text-[20px] font-medium tracking-tight mb-1">gabriel gabateli alves</h1>
-      <p class="font-mono text-[12px] text-[#888] dark:text-[#555] mb-6">são paulo, brazil</p>
-      <p class="text-[15px] text-[#555] dark:text-[#aaa] leading-relaxed max-w-[420px]">
-        computer engineering student <span class="text-[#111] dark:text-[#ededed]">@ fiap</span>.<br>
+      <p class="font-mono text-[12px] text-tertiary mb-6">são paulo, brazil</p>
+      <p class="text-[15px] text-secondary leading-relaxed max-w-[420px]">
+        computer engineering student <span class="text-fg">@ fiap</span>.<br>
       </p>
       <div class="flex items-center gap-4 mt-6">
         <a href="https://github.com/gabrielgabateli" target="_blank" rel="noopener"
-           class="font-mono text-[12px] text-[#888] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">
+           class="font-mono text-[12px] text-tertiary hover:text-fg transition-colors"
+           aria-label="github">
           github ↗
         </a>
         <a href="https://linkedin.com/in/gabateli" target="_blank" rel="noopener"
-           class="font-mono text-[12px] text-[#888] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">
+           class="font-mono text-[12px] text-tertiary hover:text-fg transition-colors"
+           aria-label="linkedin">
           linkedin ↗
         </a>
         <a href="mailto:gabateli16@gmail.com"
-           class="font-mono text-[12px] text-[#888] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">
+           class="font-mono text-[12px] text-tertiary hover:text-fg transition-colors"
+           aria-label="email">
           email ↗
         </a>
       </div>
@@ -36,50 +39,20 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
     <section id="projects" class="mb-6">
       <h2 class="text-[13px] font-medium tracking-tight mb-4">projects</h2>
-<!--      <ul class="divide-y divide-[#ebebeb] dark:divide-[#1e1e1e]">
-        <li class="flex items-start justify-between py-3">
-
-          <div>
-             <p class="font-mono text-[13px] text-[#222] dark:text-[#ccc]">Template</p> 
-             <p class="font-mono text-[11px] text-[#aaa] dark:text-[#555] mt-0.5">Ainda vou preencher</p> 
-          </div>
-          <a href="https://google.com" target="_blank" rel="noopener" class="font-mono text-[11px] text-[#aaa] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">↗</a>
-          
-        </li>
-      </ul> -->
-      <!-- <ul class="divide-y divide-[#ebebeb] dark:divide-[#1e1e1e]">
-        <li class="flex items-start justify-between py-3">
-          <div>
-            <p class="font-mono text-[13px] text-[#222] dark:text-[#ccc]">psg-cogimpair</p>
-            <p class="font-mono text-[11px] text-[#aaa] dark:text-[#555] mt-0.5">RandomForest · PSG · CAISR</p>
-          </div>
-          <a href="https://github.com/gabriegabateli" target="_blank" rel="noopener"
-             class="font-mono text-[11px] text-[#aaa] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">↗</a>
-        </li>
-        <li class="flex items-start justify-between py-3">
-          <div>
-            <p class="font-mono text-[13px] text-[#222] dark:text-[#ccc]">homelab</p>
-            <p class="font-mono text-[11px] text-[#aaa] dark:text-[#555] mt-0.5">Proxmox · LXC · Cloudflare Tunnel</p>
-          </div>
-          <a href="/blog"
-             class="font-mono text-[11px] text-[#aaa] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">↗</a>
-        </li>
-      </ul> -->
     </section>
 
     <section>
-      
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-[13px] font-medium tracking-tight">writing</h2>
-      <!--   <a href="/blog" class="font-mono text-[11px] text-[#aaa] dark:text-[#555] hover:text-[#111] dark:hover:text-[#ededed] transition-colors">
+        <a href="/blog" class="font-mono text-[11px] text-quaternary hover:text-fg transition-colors">
           ver todos →
         </a>
       </div>
-      <PostList posts={posts} />  --> 
+      <PostList posts={posts} />
     </section>
 
-    <footer class="mt-16 pt-6 border-t border-[#ebebeb] dark:border-[#1e1e1e]">
-      <p class="font-mono text-[11px] text-[#ccc] dark:text-[#333]">gabriel gabateli · são paulo · 2026</p>
+    <footer class="mt-16 pt-6 border-t border-border">
+      <p class="font-mono text-[11px] text-quaternary">gabriel gabateli · são paulo · 2026</p>
     </footer>
   </main>
 </BaseLayout>

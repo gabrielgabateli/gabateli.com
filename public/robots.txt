@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gabateli.com/sitemap-index.xml

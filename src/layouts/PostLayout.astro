@@ -1,6 +1,8 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import Nav from '../components/Nav.astro';
+import ProgressBar from '../components/ProgressBar.astro';
+import BackToTop from '../components/BackToTop.astro';
 
 interface Props {
   title: string;
@@ -15,25 +17,26 @@ const { title, description, date, tag, readTime = '5 min read', prevPost, nextPo
 ---
 
 <BaseLayout title={title} description={description}>
+  <ProgressBar />
   <Nav />
   <main class="pb-20">
     <div class="mb-9">
-      <a href="/blog" class="font-mono text-[12px] text-[#888] dark:text-[#555] hover:text-[#444] dark:hover:text-[#aaa] transition-colors">
+      <a href="/blog" class="font-mono text-[12px] text-tertiary hover:text-secondary transition-colors">
         ← blog
       </a>
     </div>
 
     <article>
-      <header class="mb-9 pb-6 border-b border-[#ebebeb] dark:border-[#1e1e1e]">
+      <header class="mb-9 pb-6 border-b border-border">
         <div class="flex items-center gap-2 mb-3">
-          <span class="font-mono text-[11px] text-[#aaa] dark:text-[#555]">{date}</span>
-          <span class="text-[#ddd] dark:text-[#333]">·</span>
-          <span class="font-mono text-[11px] text-[#aaa] dark:text-[#555]">{tag}</span>
-          <span class="text-[#ddd] dark:text-[#333]">·</span>
-          <span class="font-mono text-[11px] text-[#aaa] dark:text-[#555]">{readTime}</span>
+          <span class="font-mono text-[11px] text-quaternary">{date}</span>
+          <span class="text-border">·</span>
+          <span class="font-mono text-[11px] text-quaternary">{tag}</span>
+          <span class="text-border">·</span>
+          <span class="font-mono text-[11px] text-quaternary">{readTime}</span>
         </div>
         <h1 class="text-[22px] font-medium tracking-tight leading-[1.3] mb-2.5">{title}</h1>
-        <p class="text-[14px] text-[#777] dark:text-[#555] leading-relaxed">{description}</p>
+        <p class="text-[14px] text-secondary leading-relaxed">{description}</p>
       </header>
 
       <div class="prose-custom">
@@ -41,19 +44,19 @@ const { title, description, date, tag, readTime = '5 min read', prevPost, nextPo
       </div>
     </article>
 
-    <footer class="mt-12 pt-6 border-t border-[#ebebeb] dark:border-[#1e1e1e]">
+    <footer class="mt-12 pt-6 border-t border-border">
       <div class="flex items-center justify-between">
-        <a href="/blog" class="font-mono text-[12px] text-[#888] dark:text-[#555] hover:text-[#444] dark:hover:text-[#aaa] transition-colors">
+        <a href="/blog" class="font-mono text-[12px] text-tertiary hover:text-secondary transition-colors">
           ← todos os posts
         </a>
         <div class="flex gap-2 sm:gap-4">
           {prevPost && (
-            <a href={`/blog/${prevPost.slug}`} class="font-mono text-[12px] text-[#888] dark:text-[#555] hover:text-[#444] dark:hover:text-[#aaa] transition-colors">
+            <a href={`/blog/${prevPost.slug}`} class="font-mono text-[12px] text-tertiary hover:text-secondary transition-colors">
               ← {prevPost.title.length > 22 ? prevPost.title.slice(0, 22) + '…' : prevPost.title}
             </a>
           )}
           {nextPost && (
-            <a href={`/blog/${nextPost.slug}`} class="font-mono text-[12px] text-[#888] dark:text-[#555] hover:text-[#444] dark:hover:text-[#aaa] transition-colors">
+            <a href={`/blog/${nextPost.slug}`} class="font-mono text-[12px] text-tertiary hover:text-secondary transition-colors">
               {nextPost.title.length > 22 ? nextPost.title.slice(0, 22) + '…' : nextPost.title} →
             </a>
           )}
@@ -61,4 +64,5 @@ const { title, description, date, tag, readTime = '5 min read', prevPost, nextPo
       </div>
     </footer>
   </main>
+  <BackToTop />
 </BaseLayout>

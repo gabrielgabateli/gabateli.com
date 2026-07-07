@@ -13,19 +13,30 @@ const path = Astro.url.pathname;
       class:list={[
         'text-[13px] sm:text-[14px] transition-colors',
         path.startsWith('/blog')
-          ? 'text-[#111] dark:text-[#ededed] font-medium'
-          : 'text-[#666] hover:text-[#111] dark:hover:text-[#ededed]',
+          ? 'text-fg font-medium'
+          : 'text-tertiary hover:text-fg',
       ]}
     >blog</a>
     <a
+      href="/tags"
+      class:list={[
+        'text-[13px] sm:text-[14px] transition-colors',
+        path.startsWith('/tags')
+          ? 'text-fg font-medium'
+          : 'text-tertiary hover:text-fg',
+      ]}
+    >tags</a>
+    <a
       href="/#projects"
-      class="text-[13px] sm:text-[14px] text-[#666] hover:text-[#111] dark:hover:text-[#ededed] transition-colors"
+      class="text-[13px] sm:text-[14px] text-tertiary hover:text-fg transition-colors"
+      aria-label="projetos"
     >projects</a>
     <a
       href="/cv.pdf"
       target="_blank"
       rel="noopener"
-      class="text-[13px] sm:text-[14px] text-[#666] hover:text-[#111] dark:hover:text-[#ededed] transition-colors"
+      class="text-[13px] sm:text-[14px] text-tertiary hover:text-fg transition-colors"
+      aria-label="currículo (pdf)"
     >cv</a>
     <ThemeToggle />
   </div>

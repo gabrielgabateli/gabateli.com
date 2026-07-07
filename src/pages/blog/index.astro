@@ -15,7 +15,7 @@ const tags = [...new Set(posts.map((p) => p.data.tag))];
   <main class="pb-20">
     <section class="mb-8">
       <h1 class="text-[20px] font-medium tracking-tight mb-1">writing</h1>
-      <p class="font-mono text-[12px] text-[#888] dark:text-[#555]">
+      <p class="font-mono text-[12px] text-tertiary">
         {posts.length} posts · sobre homelab, software e afins
       </p>
     </section>
@@ -24,19 +24,19 @@ const tags = [...new Set(posts.map((p) => p.data.tag))];
       <TagFilter tags={tags} />
     </section>
 
-    <ul class="divide-y divide-[#ebebeb] dark:divide-[#1e1e1e]">
+    <ul class="divide-y divide-border">
       {posts.map((post) => (
         <li data-post-tag={post.data.tag}>
           <a href={`/blog/${post.slug}`} class="flex items-baseline justify-between py-1.5 group">
             <div class="flex items-baseline gap-2.5 min-w-0 overflow-hidden">
-              <span class="font-mono text-[13px] text-[#222] dark:text-[#ccc] truncate group-hover:underline underline-offset-2 decoration-[#ccc] dark:decoration-[#444]">
+              <span class="font-mono text-[13px] text-secondary group-hover:underline underline-offset-2 decoration-quaternary">
                 {post.data.title}
               </span>
-              <span class="font-mono text-[10px] text-[#bbb] dark:text-[#444] shrink-0">
+              <span class="font-mono text-[10px] text-quaternary shrink-0">
                 {post.data.tag}
               </span>
             </div>
-            <span class="font-mono text-[11px] text-[#aaa] dark:text-[#555] shrink-0 ml-3 sm:ml-4">
+            <span class="font-mono text-[11px] text-tertiary shrink-0 ml-3 sm:ml-4">
               {post.data.date}
             </span>
           </a>
@@ -44,8 +44,8 @@ const tags = [...new Set(posts.map((p) => p.data.tag))];
       ))}
     </ul>
 
-    <footer class="mt-16 pt-6 border-t border-[#ebebeb] dark:border-[#1e1e1e]">
-      <p class="font-mono text-[11px] text-[#ccc] dark:text-[#333]">gabriel gabateli · são paulo · 2025</p>
+    <footer class="mt-16 pt-6 border-t border-border">
+      <p class="font-mono text-[11px] text-quaternary">gabriel gabateli · são paulo · 2026</p>
     </footer>
   </main>
 </BaseLayout>

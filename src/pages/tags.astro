@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft));
+const tagCounts = posts.reduce((acc, post) => {
+  const tag = post.data.tag;
+  acc[tag] = (acc[tag] || 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+
+const sortedTags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
+---
+
+<BaseLayout title="tags" description="Tags dos posts do blog.">
+  <Nav />
+  <main class="pb-20">
+    <section class="mb-8">
+      <h1 class="text-[20px] font-medium tracking-tight mb-1">tags</h1>
+      <p class="font-mono text-[12px] text-tertiary">
+        {sortedTags.length} tags · {posts.length} posts
+      </p>
+    </section>
+
+    <ul class="divide-y divide-border">
+      {sortedTags.map(([tag, count]) => (
+        <li>
+          <a href="/blog" class="flex items-baseline justify-between py-1.5 group">
+            <span class="font-mono text-[13px] text-secondary group-hover:text-fg transition-colors">
+              {tag}
+            </span>
+            <span class="font-mono text-[11px] text-tertiary shrink-0 ml-3">
+              {count} {count === 1 ? 'post' : 'posts'}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <footer class="mt-16 pt-6 border-t border-border">
+      <p class="font-mono text-[11px] text-quaternary">gabriel gabateli · são paulo · 2026</p>
+    </footer>
+  </main>
+</BaseLayout>
