@@ -4,14 +4,14 @@ const path = Astro.url.pathname;
 ---
 
 <nav class="flex items-center justify-between py-10">
-  <a href="/" class="text-[15px] font-medium tracking-tight hover:opacity-70 transition-opacity">
+  <a href="/" class="text-[14px] sm:text-[15px] font-medium tracking-tight hover:opacity-70 transition-opacity">
     gabriel gabateli
   </a>
-  <div class="flex items-center gap-7">
+  <div class="flex items-center gap-3 sm:gap-7">
     <a
       href="/blog"
       class:list={[
-        'text-[14px] transition-colors',
+        'text-[13px] sm:text-[14px] transition-colors',
         path.startsWith('/blog')
           ? 'text-[#111] dark:text-[#ededed] font-medium'
           : 'text-[#666] hover:text-[#111] dark:hover:text-[#ededed]',
@@ -19,13 +19,13 @@ const path = Astro.url.pathname;
     >blog</a>
     <a
       href="/#projects"
-      class="text-[14px] text-[#666] hover:text-[#111] dark:hover:text-[#ededed] transition-colors"
+      class="text-[13px] sm:text-[14px] text-[#666] hover:text-[#111] dark:hover:text-[#ededed] transition-colors"
     >projects</a>
     <a
       href="/cv.pdf"
       target="_blank"
       rel="noopener"
-      class="text-[14px] text-[#666] hover:text-[#111] dark:hover:text-[#ededed] transition-colors"
+      class="text-[13px] sm:text-[14px] text-[#666] hover:text-[#111] dark:hover:text-[#ededed] transition-colors"
     >cv</a>
     <ThemeToggle />
   </div>
