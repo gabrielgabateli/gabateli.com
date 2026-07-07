@@ -47,18 +47,33 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 
     <ViewTransitions />
 
-    <script is:inline>
+    <script is:inline data-astro-rerun>
       (function () {
-        const saved = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const isDark = saved === 'dark' || (!saved && prefersDark);
-        if (isDark) {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
+        function applyTheme() {
+          const saved = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const isDark = saved === 'dark' || (!saved && prefersDark);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+          const favicon = document.getElementById('favicon');
+          if (favicon) favicon.href = isDark ? '/favicon-light.svg' : '/favicon-dark.svg';
         }
-        const favicon = document.getElementById('favicon');
-        if (favicon) favicon.href = isDark ? '/favicon-light.svg' : '/favicon-dark.svg';
+
+        applyTheme();
+
+        document.addEventListener('astro:before-swap', (event) => {
+          const saved = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const isDark = saved === 'dark' || (!saved && prefersDark);
+          if (isDark) {
+            event.newDocument.documentElement.classList.add('dark');
+          } else {
+            event.newDocument.documentElement.classList.remove('dark');
+          }
+        });
       })();
     </script>
   </head>
