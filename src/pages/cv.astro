@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+---
+
+<BaseLayout title="cv">
+  <Nav />
+  <main class="pb-20">
+    <div class="mb-6">
+      <a href="/cv.pdf" target="_blank" rel="noopener"
+         class="font-mono text-[12px] text-tertiary hover:text-fg transition-colors">
+        ← baixar pdf ↗
+      </a>
+    </div>
+    <object
+      data="/cv.pdf"
+      type="application/pdf"
+      class="w-full h-[80vh] border border-border rounded-md"
+    >
+      <p class="font-mono text-[12px] text-tertiary">
+        não foi possível carregar o pdf. <a href="/cv.pdf" class="underline hover:text-fg transition-colors">clique aqui para baixar.</a>
+      </p>
+    </object>
+  </main>
+</BaseLayout>

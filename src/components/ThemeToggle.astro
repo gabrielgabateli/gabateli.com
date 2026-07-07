@@ -7,17 +7,24 @@
 </button>
 
 <script>
-  const btn = document.getElementById('theme-toggle')!;
-  const icon = document.getElementById('theme-icon')!;
+  function initThemeToggle() {
+    const btn = document.getElementById('theme-toggle');
+    const icon = document.getElementById('theme-icon');
+    if (!btn || !icon || btn.dataset.initialized) return;
+    btn.dataset.initialized = 'true';
 
-  const update = () => {
-    icon.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
-  };
-  update();
-
-  btn.addEventListener('click', () => {
-    const isDark = document.documentElement.classList.toggle('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    const update = () => {
+      icon.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+    };
     update();
-  });
+
+    btn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      update();
+    });
+  }
+
+  initThemeToggle();
+  document.addEventListener('astro:page-load', initThemeToggle);
 </script>
