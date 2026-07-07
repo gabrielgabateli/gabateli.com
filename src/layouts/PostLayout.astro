@@ -16,7 +16,7 @@ interface Props {
 const { title, description, date, tag, readTime = '5 min read', prevPost, nextPost } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} hideAsciiBackground>
   <ProgressBar />
   <Nav />
   <main class="pb-20">

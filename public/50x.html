@@ -77,6 +77,17 @@
       nav a.brand { font-size: 15px; }
       h1 { font-size: 72px; }
     }
+    .ascii-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.8;
+      pointer-events: none;
+      user-select: none;
+      width: 100vw;
+      height: 100vh;
+    }
+    .wrap { position: relative; z-index: 10; }
   </style>
   <script>
     (function () {
@@ -92,7 +103,9 @@
   </script>
 </head>
 <body>
-  <div class="container">
+  <canvas id="ascii-background" aria-hidden="true" class="ascii-bg"></canvas>
+  <div class="wrap">
+    <div class="container">
     <nav>
       <a href="/" class="brand">gabriel gabateli</a>
       <div class="links">
@@ -108,6 +121,202 @@
       <p>algo deu errado.</p>
       <a href="/" class="back-link">voltar ao início →</a>
     </main>
+    </div>
   </div>
+  <script>
+    (function () {
+      var CHARS = ['·', ':', '•', '-', '~', '∿', '+', '*'];
+      var FONT_SIZE = 13;
+      var DESKTOP_GAP = 26;
+      var MOBILE_GAP = 34;
+      var COLOR_VAR = '--secondary';
+      var MIN_ALPHA = 0.05;
+      var MAX_ALPHA = 0.22;
+      var CURSOR_COLOR = '#ef4444';
+      var CURSOR_RADIUS = 220;
+      var CURSOR_ALPHA_BOOST = 0.30;
+      var CURSOR_FOLLOW = 0.18;
+
+      var rafId = null;
+      var canvas = document.getElementById('ascii-background');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var width = 0;
+      var height = 0;
+      var cols = 0;
+      var rows = 0;
+      var gap = DESKTOP_GAP;
+      var startTime = performance.now();
+      var lastFrame = 0;
+      var isPaused = false;
+      var mouseX = 0;
+      var mouseY = 0;
+      var targetMouseX = 0;
+      var targetMouseY = 0;
+      var mouseActive = false;
+      var supportsPointerInteraction = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+      }
+
+      function mapRange(value, inMin, inMax, outMin, outMax) {
+        return ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
+      }
+
+      function getFillColor() {
+        var raw = getComputedStyle(document.documentElement).getPropertyValue(COLOR_VAR).trim();
+        return raw || (document.documentElement.classList.contains('dark') ? '#aaa' : '#555');
+      }
+
+      function updateCursorPosition(x, y) {
+        if (!supportsPointerInteraction) return;
+        targetMouseX = x;
+        targetMouseY = y;
+        if (!mouseActive) {
+          mouseX = x;
+          mouseY = y;
+        }
+        mouseActive = true;
+      }
+
+      function setupCanvas() {
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var rect = canvas.getBoundingClientRect();
+        width = rect.width;
+        height = rect.height;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.font = FONT_SIZE + 'px Geist Mono, monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        gap = width < 768 ? MOBILE_GAP : DESKTOP_GAP;
+        cols = Math.ceil(width / gap) + 1;
+        rows = Math.ceil(height / gap) + 1;
+      }
+
+      function draw() {
+        if (!canvas.isConnected) return;
+        var rect = canvas.getBoundingClientRect();
+        width = rect.width;
+        height = rect.height;
+        var centerX = width / 2;
+        var centerY = height / 2;
+        var now = performance.now();
+        var t = (now - startTime) * 0.0004;
+        var baseColor = getFillColor();
+
+        if (mouseActive) {
+          mouseX += (targetMouseX - mouseX) * CURSOR_FOLLOW;
+          mouseY += (targetMouseY - mouseY) * CURSOR_FOLLOW;
+        }
+
+        var radiusSq = CURSOR_RADIUS * CURSOR_RADIUS;
+
+        ctx.clearRect(0, 0, width, height);
+
+        for (var gy = 0; gy < rows; gy++) {
+          for (var gx = 0; gx < cols; gx++) {
+            var x = gx * gap;
+            var y = gy * gap;
+            var dx = x - centerX;
+            var dy = y - centerY;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+
+            var waveA = Math.sin(x * 0.014 + t * 1.0);
+            var waveB = Math.sin(y * 0.012 - t * 0.7);
+            var radial = Math.sin(dist * 0.012 - t * 1.3);
+            var intensity = (waveA + waveB + radial) / 3;
+            var ripple = Math.sin(dist * 0.006 + t * 0.5) * 0.35;
+            intensity = clamp(intensity + ripple, -1, 1);
+
+            var normalized = mapRange(intensity, -1, 1, 0, 1);
+            var char = CHARS[Math.floor(normalized * (CHARS.length - 1))];
+            var baseAlpha = clamp(mapRange(normalized, 0, 1, MIN_ALPHA, MAX_ALPHA), MIN_ALPHA, MAX_ALPHA);
+
+            var cursorInfluence = 0;
+            if (mouseActive) {
+              var cursorDx = x - mouseX;
+              var cursorDy = y - mouseY;
+              var cursorDistSq = cursorDx * cursorDx + cursorDy * cursorDy;
+              if (cursorDistSq < radiusSq) {
+                cursorInfluence = 1 - Math.sqrt(cursorDistSq) / CURSOR_RADIUS;
+              }
+            }
+
+            ctx.globalAlpha = clamp(baseAlpha + cursorInfluence * CURSOR_ALPHA_BOOST, 0, 0.9);
+            ctx.fillStyle = cursorInfluence > 0 ? CURSOR_COLOR : baseColor;
+            ctx.fillText(char, x, y);
+          }
+        }
+      }
+
+      function tick(now) {
+        if (isPaused) return;
+        if (now - lastFrame < 50) {
+          rafId = requestAnimationFrame(tick);
+          return;
+        }
+        lastFrame = now;
+        draw();
+        rafId = requestAnimationFrame(tick);
+      }
+
+      function start() {
+        if (rafId) return;
+        isPaused = false;
+        rafId = requestAnimationFrame(tick);
+      }
+
+      setupCanvas();
+      if (reducedMotion) {
+        draw();
+      } else {
+        start();
+      }
+
+      window.addEventListener('resize', function () {
+        setupCanvas();
+        if (reducedMotion) draw();
+      });
+
+      window.addEventListener('pointermove', function (event) {
+        updateCursorPosition(event.clientX, event.clientY);
+      });
+
+      window.addEventListener('pointerleave', function () {
+        mouseActive = false;
+      });
+
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+          isPaused = true;
+          if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+          }
+        } else if (!reducedMotion) {
+          start();
+        }
+      });
+
+      var motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+      motionMedia.addEventListener('change', function (e) {
+        reducedMotion = e.matches;
+        if (reducedMotion) {
+          isPaused = true;
+          if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+          }
+          draw();
+        } else {
+          start();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
