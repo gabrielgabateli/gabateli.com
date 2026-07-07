@@ -58,7 +58,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
           document.documentElement.classList.remove('dark');
         }
         const favicon = document.getElementById('favicon');
-        if (favicon) favicon.href = isDark ? '/favicon-dark.svg' : '/favicon-light.svg';
+        if (favicon) favicon.href = isDark ? '/favicon-light.svg' : '/favicon-dark.svg';
       })();
     </script>
   </head>
