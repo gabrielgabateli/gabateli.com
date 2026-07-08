@@ -27,10 +27,15 @@ const path = Astro.url.pathname;
       ]}
     >tags</a>
     <a
-      href="/#projects"
-      class="text-[13px] sm:text-[14px] text-tertiary hover:text-fg transition-colors"
-      aria-label="projetos"
-    >projects</a>
+      href="/homelab"
+      class:list={[
+        'text-[13px] sm:text-[14px] transition-colors',
+        path.startsWith('/homelab')
+          ? 'text-fg font-medium'
+          : 'text-tertiary hover:text-fg',
+      ]}
+      aria-label="homelab"
+    >homelab</a>
     <a
       href="/cv.pdf"
       target="_blank"

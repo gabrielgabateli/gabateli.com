@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import HomelabDiagram from '../components/HomelabDiagram.astro';
+---
+
+<BaseLayout title="homelab">
+  <Nav />
+  <main class="pb-20">
+    <section class="pt-4 pb-4">
+      <h1 class="text-[20px] font-medium tracking-tight mb-1">homelab</h1>
+      <HomelabDiagram />
+    </section>
+  </main>
+</BaseLayout>

@@ -58,19 +58,13 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
       </div>
     </section>
 
-    <section id="projects" class="mb-6">
-      <h2 class="text-[13px] font-medium tracking-tight mb-4">projects</h2>
-    </section>
-
-    <section>
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-[13px] font-medium tracking-tight">writing</h2>
-        <a href="/blog" class="font-mono text-[11px] text-quaternary hover:text-fg transition-colors">
-          ver todos →
-        </a>
-      </div>
-      <PostList posts={posts} />
-    </section>
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-[13px] font-medium tracking-tight">writing</h2>
+      <a href="/blog" class="font-mono text-[11px] text-quaternary hover:text-fg transition-colors">
+        ver todos →
+      </a>
+    </div>
+    <PostList posts={posts} />
 
     <footer class="mt-16 pt-6 border-t border-border">
       <p class="font-mono text-[11px] text-quaternary">
