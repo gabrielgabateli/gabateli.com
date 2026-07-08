@@ -4,6 +4,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/Nav.astro';
 import PostList from '../components/PostList.astro';
 
+function formatUptime(since: Date): string {
+  const ms = Date.now() - since.getTime();
+  const minutes = Math.floor(ms / 60000);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days < 1) return `${hours}h`;
+  if (days < 30) return `${days}d`;
+
+  const months = Math.floor(days / 30);
+  if (months < 12) return `${months}mo`;
+
+  const years = Math.floor(months / 12);
+  const remainingMonths = months % 12;
+  return remainingMonths > 0 ? `${years}y ${remainingMonths}mo` : `${years}y`;
+}
+
+const firstDeploy = new Date('2025-06-01');
+const buildDate = new Date().toISOString().slice(0, 10);
+const uptimeString = formatUptime(firstDeploy);
+
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .slice(0, 5);
@@ -52,7 +73,9 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     </section>
 
     <footer class="mt-16 pt-6 border-t border-border">
-      <p class="font-mono text-[11px] text-quaternary">gabriel gabateli · são paulo · 2026</p>
+      <p class="font-mono text-[11px] text-quaternary">
+        gabriel gabateli · são paulo · {new Date().getFullYear()} · uptime: {uptimeString} · built: {buildDate}
+      </p>
     </footer>
   </main>
 </BaseLayout>
