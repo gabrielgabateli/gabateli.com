@@ -1,0 +1,81 @@
+<div id="whoami-overlay" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/30">
+  <div id="whoami-card" class="max-w-[340px] p-6 rounded-lg font-mono text-[12px] text-secondary bg-bg border border-border"
+       style="box-shadow: 0 0 0 1px var(--color-border), 0 8px 32px rgba(0,0,0,0.12);">
+    <p class="text-fg font-medium mb-3">$ whoami</p>
+    <p>gabriel gabateli alves</p>
+    <p>computer engineer</p>
+    <p class="text-quaternary mt-3">press esc to close</p>
+  </div>
+</div>
+
+<script>
+  let buffer = '';
+  let timeout: ReturnType<typeof setTimeout>;
+  let dismissed = false;
+
+  function show() {
+    if (dismissed) return;
+    const overlay = document.getElementById('whoami-overlay');
+    const card = document.getElementById('whoami-card');
+    if (!overlay || !card) return;
+    overlay.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      card.classList.add('visible');
+    });
+    (window as any).__asciiHaloGreen = true;
+  }
+
+  function hide() {
+    const overlay = document.getElementById('whoami-overlay');
+    const card = document.getElementById('whoami-card');
+    if (!overlay || !card) return;
+    card.classList.remove('visible');
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+    }, 200);
+    dismissed = true;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+
+    if (e.key === 'Escape') {
+      hide();
+      return;
+    }
+
+    if (timeout) clearTimeout(timeout);
+    buffer += e.key.toLowerCase();
+
+    if (buffer.length > 6) buffer = buffer.slice(-6);
+
+    if (buffer === 'whoami') {
+      show();
+      buffer = '';
+    }
+
+    timeout = setTimeout(() => { buffer = ''; }, 2000);
+  });
+
+  document.getElementById('whoami-overlay')?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).id === 'whoami-overlay') hide();
+  });
+
+  document.addEventListener('astro:page-load', () => {
+    if (dismissed) {
+      document.getElementById('whoami-overlay')?.classList.add('hidden');
+    }
+  });
+</script>
+
+<style>
+  #whoami-card {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+  #whoami-card.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+</style>
